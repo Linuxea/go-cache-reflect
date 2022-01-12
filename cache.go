@@ -12,7 +12,7 @@ import (
 type Cache struct {
 	key      string                      // redis key
 	redis    *redis.Client               // redis cli
-	model    interface{}                 // the dest model pointer
+	model    interface{}                 // the dest model with pointer type
 	FetchFun func() (interface{}, error) // execute in case of cache does not exists
 	ttl      time.Duration               // cache ttl
 }

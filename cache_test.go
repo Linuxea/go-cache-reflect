@@ -63,7 +63,8 @@ func TestList(t *testing.T) {
 	var result []*Product
 
 	// list
-	cache := &Cache{key: "productAll",
+	cache := &Cache{
+		key:   "productAll",
 		redis: redisCli,
 		model: &result,
 		FetchFun: func() (interface{}, error) {
@@ -86,7 +87,8 @@ func TestList(t *testing.T) {
 func TestGetString(t *testing.T) {
 	// get string
 	var result string
-	getStringCache := &Cache{key: "randomString",
+	getStringCache := &Cache{
+		key:   "randomString",
 		redis: redisCli,
 		model: &result,
 		FetchFun: func() (interface{}, error) {
@@ -107,7 +109,8 @@ func TestGetString(t *testing.T) {
 func TestGetInt(t *testing.T) {
 	// get int
 	var result int
-	getIntCache := &Cache{key: "3333" + "id",
+	getIntCache := &Cache{
+		key:   "3333" + "id",
 		redis: redisCli,
 		model: &result,
 		FetchFun: func() (interface{}, error) {
@@ -136,7 +139,8 @@ func TestGetStruct(t *testing.T) {
 	var result Product
 
 	// get struct
-	getOneProductCache := &Cache{key: "oneProduct",
+	getOneProductCache := &Cache{
+		key:   "oneProduct",
 		redis: redisCli,
 		model: &result,
 		FetchFun: func() (interface{}, error) {
@@ -173,7 +177,8 @@ func TestGetComplicateStruct(t *testing.T) {
 	var result Person
 
 	// get Person
-	getPersonCache := &Cache{key: "getPerson",
+	getPersonCache := &Cache{
+		key:   "getPerson",
 		redis: redisCli,
 		model: &result,
 		FetchFun: func() (interface{}, error) {
