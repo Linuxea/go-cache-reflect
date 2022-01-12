@@ -2,6 +2,7 @@ package cache
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 	"time"
 
@@ -11,12 +12,16 @@ import (
 type Cache struct {
 	key      string                      // redis key
 	redis    *redis.Client               // redis cli
-	model    interface{}                 // the data model instance, require reflect.Type from it
+	model    interface{}                 // the dest model pointer
 	FetchFun func() (interface{}, error) // execute in case of cache does not exists
 	ttl      time.Duration               // cache ttl
 }
 
 func (c *Cache) cache() error {
+
+	if reflect.ValueOf(c.model).Kind() != reflect.Ptr {
+		return errors.New("model should be pointer")
+	}
 
 	// has cache already ?
 	s, err := c.redis.Get(c.key).Result()
@@ -26,12 +31,10 @@ func (c *Cache) cache() error {
 
 	// from cache
 	if err == nil {
-		result := reflect.New(reflect.TypeOf(c.model)).Interface()
-		if err = json.Unmarshal([]byte(s), result); err != nil {
+		if err = json.Unmarshal([]byte(s), c.model); err != nil {
 			return err
 		}
 
-		reflect.ValueOf(c.model).Elem().Set(reflect.ValueOf(result).Elem())
 		return nil
 	}
 

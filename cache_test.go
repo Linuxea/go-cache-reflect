@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"reflect"
 	"testing"
 	"time"
 
@@ -184,7 +185,7 @@ func TestGetComplicateStruct(t *testing.T) {
 				Age:  12,
 			}, nil
 		},
-		ttl: time.Second * 30,
+		ttl: time.Second * 5,
 	}
 
 	err := getPersonCache.cache()
@@ -193,4 +194,14 @@ func TestGetComplicateStruct(t *testing.T) {
 	}
 
 	fmt.Println(result)
+	fmt.Println(result.Products[0].Code)
+
+}
+
+func TestSlicePointer(t *testing.T) {
+
+	i := &[]int{1, 2, 3}
+	reflect.ValueOf(i).Elem().Set(reflect.ValueOf([]int{4, 5, 6}))
+	fmt.Println(i)
+
 }
