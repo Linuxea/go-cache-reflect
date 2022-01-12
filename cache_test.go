@@ -167,6 +167,7 @@ func TestGetComplicateStruct(t *testing.T) {
 		Products []*Product
 		Name     string
 		Age      int
+		Wife     *Person
 	}
 
 	var result Person
@@ -183,6 +184,9 @@ func TestGetComplicateStruct(t *testing.T) {
 				}}},
 				Name: "linuxea",
 				Age:  12,
+				Wife: &Person{
+					Name: "王冰",
+					Age:  32},
 			}, nil
 		},
 		ttl: time.Second * 5,
@@ -195,6 +199,7 @@ func TestGetComplicateStruct(t *testing.T) {
 
 	fmt.Println(result)
 	fmt.Println(result.Products[0].Code)
+	fmt.Println(result.Wife)
 
 }
 
